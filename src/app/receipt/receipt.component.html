@@ -1,0 +1,56 @@
+<h2>Receipt</h2>
+
+<div *ngIf="products.size <= 0">
+  <span class="fst-italic">No products</span>
+</div>
+
+<div *ngIf="products.size > 0">
+  <table class="table mb-5">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of products | keyvalue" class="align-middle">
+        <td>{{ entry.key.name }}</td>
+        <td>{{ entry.value }}</td>
+        <td>{{ entry.key.price | currency:'EUR' }}</td>
+        <td>{{ (entry.key.price * entry.value) | currency:'EUR' }}</td>
+        <td><button (click)="addProduct(entry.key)" type="button" style="font-size: 1.2rem" class="btn btn-primary m-2"><i
+               class="bi bi-plus-circle mr-2"></i></button>
+          <button (click)="removeProduct(entry.key)" type="button" style="font-size: 1.2rem" class="btn btn-primary m-2"><i
+               class="bi bi-dash-circle"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>Totals</th>
+        <th>Amounts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total:</td>
+        <td>{{ sum | currency:'EUR' }}</td>
+      </tr>
+      <tr>
+        <td>Deposit:</td>
+        <td>{{ deposit | currency:'EUR' }}</td>
+      </tr>
+      <tr class="table-info">
+        <td>Total with Deposit:</td>
+        <td>{{ sum + deposit | currency:'EUR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="reset()" type="button" class="btn btn-danger m-2">Reset</button>
+</div>
